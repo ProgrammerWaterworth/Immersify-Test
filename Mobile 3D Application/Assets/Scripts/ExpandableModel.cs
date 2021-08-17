@@ -35,10 +35,7 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
     /// </summary>
     void SetChildObjectParts()
     {
-        List<ModelExpandableChild> childObjects = new List<ModelExpandableChild>();
-
-        ModelExpandableChild[] childTransforms = GetComponentsInChildren<ModelExpandableChild>();
-
+        childObjects = new List<ModelExpandableChild>();
         childObjects.AddRange(GetComponentsInChildren<ModelExpandableChild>());
     }
 
@@ -46,8 +43,12 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
 
     public void Interact()
     {
+        Debug.Log("Interact");
+
         if (expandCoroutine != null)
             StopCoroutine(expandCoroutine);
+
+        expanded = !expanded;
 
         if (expanded)
             expandCoroutine = StartCoroutine(CollapseObject());
@@ -62,8 +63,10 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
     {
         while (expansionMagnitude < 1)
         {
-            expansionMagnitude += expansionRate;
+            expansionMagnitude += expansionRate*Time.deltaTime;
+            UpdateChildModels();
             yield return new WaitForEndOfFrame();
+
         }
         expansionMagnitude = 1;
         yield return null;
@@ -76,10 +79,24 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
     {
         while (expansionMagnitude > 0)
         {
-            expansionMagnitude -= collapseRate;
+            expansionMagnitude -= collapseRate*Time.deltaTime;
+            UpdateChildModels();
             yield return new WaitForEndOfFrame();
         }
         expansionMagnitude = 0;
         yield return null;
+    }
+
+    /// <summary>
+    /// Update expansion position of each child model of the current gameobject.
+    /// </summary>
+    void UpdateChildModels()
+    {
+        foreach (ModelExpandableChild _child in childObjects)
+        {
+           
+            if(_child!=null)
+                _child.UpdatePosition(expansionMagnitude);
+        }
     }
 }
