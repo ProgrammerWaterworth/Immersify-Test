@@ -65,7 +65,8 @@ public class ModelExpandableChild : MonoBehaviour
             startingPosition = GetComponent<Collider>().bounds.center;
 
 
-        Canvas canvas = Instantiate(objectNameTextGUICanvas, startingPosition + textObjectOffset, Quaternion.identity, transform);
+        Canvas canvas = Instantiate(objectNameTextGUICanvas, startingPosition + textObjectOffset, Quaternion.identity, null);
+        canvas.transform.parent = transform;
         objectNameTextGUICanvas = canvas;
         if (canvas.GetComponentInChildren<TextMeshProUGUI>() != null)
         {
