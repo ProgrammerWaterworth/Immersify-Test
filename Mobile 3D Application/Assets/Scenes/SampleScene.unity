@@ -492,6 +492,11 @@ PrefabInstance:
       propertyPath: textObjectOffset.x
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 4832095315165803093, guid: c66858eebc6bb6245b23ec5998c99166,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.32
+      objectReference: {fileID: 0}
     - target: {fileID: 4991901748879661911, guid: c66858eebc6bb6245b23ec5998c99166,
         type: 3}
       propertyPath: textObjectOffset.y

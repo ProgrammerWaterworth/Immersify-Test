@@ -42,13 +42,19 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
 
         //Set the name of each component
         string[] data = modelData.text.Split(new char[] { ',' });
-
+        Debug.Log(data.Length);
         foreach (ModelExpandableChild _child in childObjects)
         {
-            for (int i = 0; i < data.Length - 1;i++)
+            for (int i = 0; i < data.Length ; i++)
             {
+                Debug.Log(_child.name + "  =  " + data[i]);
                 if (_child.name.Contains(data[i]))
+                {
+                    Debug.LogWarning(_child.name + "  =  " + data[i]);
                     _child.SetPartName(data[i]);
+                    break;
+                }
+                    
             }
         }
     

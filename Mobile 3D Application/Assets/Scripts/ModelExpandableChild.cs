@@ -9,8 +9,7 @@ public class ModelExpandableChild : MonoBehaviour
     Vector3 collapsedPosition;
     [SerializeField] Vector3 expandedTransformation;
 
-    [Header("UI")]
-    [SerializeField] Vector3 textObjectOffset;
+    Vector3 startingPosition, textObjectOffset;
 
     Canvas objectNameTextGUICanvas;  
     TextMeshProUGUI objectNameTextGUI;
@@ -18,7 +17,8 @@ public class ModelExpandableChild : MonoBehaviour
 
     private void Start()
     {
-        collapsedPosition = transform.position;        
+        collapsedPosition = transform.localPosition;
+        textObjectOffset = new Vector3(.05f,.01f,.06f);
     }
 
     /// <summary>
@@ -42,7 +42,6 @@ public class ModelExpandableChild : MonoBehaviour
     {
         if (objectNameTextGUI != null)
         {
-            
             objectNameTextGUICanvas.transform.LookAt(Camera.main.transform);
         }
     }
@@ -60,7 +59,13 @@ public class ModelExpandableChild : MonoBehaviour
             return;
         }
 
-        Canvas canvas = Instantiate(objectNameTextGUICanvas, transform.position, Quaternion.identity, transform);
+        startingPosition = transform.position;
+        //Get object collider for centre point
+        if (GetComponent<Collider>() != null)
+            startingPosition = GetComponent<Collider>().bounds.center;
+
+
+        Canvas canvas = Instantiate(objectNameTextGUICanvas, startingPosition + textObjectOffset, Quaternion.identity, transform);
         objectNameTextGUICanvas = canvas;
         if (canvas.GetComponentInChildren<TextMeshProUGUI>() != null)
         {
@@ -77,6 +82,6 @@ public class ModelExpandableChild : MonoBehaviour
     public void SetPartName(string _name)
     {
         CreateTextCanvas();
-        objectNameTextGUI.name = _name;
+        objectNameTextGUI.text = _name;
     }
 }
