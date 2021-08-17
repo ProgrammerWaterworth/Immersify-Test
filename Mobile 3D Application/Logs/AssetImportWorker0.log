@@ -1773,3 +1773,42 @@ Received Import Request.
 Start importing Assets/Scenes using Guid(f7b66c42ee145314083f073e99178630) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0c2d54b81bd2666c031a260235ebad3') in 0.002928 seconds
   Import took 0.004708 seconds .
 
+========================================================================
+Received Import Request.
+  Time since last request: 53.654320 seconds.
+  path: Assets/Prefabs/TestModelWithParts.prefab
+  artifactKey: Guid(c66858eebc6bb6245b23ec5998c99166) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/TestModelWithParts.prefab using Guid(c66858eebc6bb6245b23ec5998c99166) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '077ea9a1a3a46ebac42bfda64596966e') in 0.083883 seconds
+  Import took 0.086381 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.345555 seconds.
+  path: Assets/Prefabs/TestModelWithParts.prefab
+  artifactKey: Guid(c66858eebc6bb6245b23ec5998c99166) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/TestModelWithParts.prefab using Guid(c66858eebc6bb6245b23ec5998c99166) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45f8fadcf03424f482d3ef3383953795') in 0.034813 seconds
+  Import took 0.038011 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001018 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.28 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.605 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.30 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1195 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 65.2 MB.
+System memory in use after: 65.3 MB.
+
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 1807.
+Total: 1.481700 ms (FindLiveObjects: 0.230300 ms CreateObjectMapping: 0.033600 ms MarkObjects: 1.202200 ms  DeleteObjects: 0.014800 ms)
+
