@@ -10,7 +10,7 @@ public class UserInput : MonoBehaviour
     [Header("Touch Control Variables")]
     [Tooltip("The amount by which a drag action affects selected objects rotation.")] [SerializeField] float oneToughDragMagnitude;
     [Tooltip("The amount by which a drag action affects selected objects scale.")] [SerializeField] float twoTouchDragMagnitude;
-
+    float twoTouchFingerDistance; //Distance between two fingers touching the screen.
 
 
 
@@ -51,22 +51,29 @@ public class UserInput : MonoBehaviour
     /// </summary>
     void DragTouchAcrossScreen()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount ==1)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Moved && selectedObject != null)
             {
                 selectedObject.Rotate(Input.GetTouch(0).deltaPosition * oneToughDragMagnitude);
             }
 
-            if (Input.touchCount > 1)
+           
+        }else if (Input.touchCount > 1)
+        {
+            if (selectedObject != null)
             {
-                if (selectedObject != null)
+                Vector2 _touchSeperation = Input.GetTouch(0).position - Input.GetTouch(1).position;
+
+                //Don't scale from last two finger touch point.
+                if (Input.GetTouch(1).phase != TouchPhase.Began)
                 {
-                    Vector2 _touchSeperation = Input.GetTouch(0).position - Input.GetTouch(1).position;
-                    selectedObject.Scale(_touchSeperation.magnitude * twoTouchDragMagnitude);
+                    selectedObject.Scale((_touchSeperation.magnitude - twoTouchFingerDistance) * Time.deltaTime * twoTouchDragMagnitude);
                 }
 
+                twoTouchFingerDistance = _touchSeperation.magnitude;
             }
+
         }
     }
 }

@@ -10,8 +10,8 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
         transform.Rotate(Camera.main.transform.up, -_rotation.x, Space.World);
     }
 
-    public void Scale(float _magnitude)
+    public void Scale(float _deltaScale)
     {
-        transform.localScale = Vector3.one * _magnitude;
+        transform.localScale += Vector3.one * _deltaScale;
     }
 }
