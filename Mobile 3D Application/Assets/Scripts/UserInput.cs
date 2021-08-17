@@ -54,6 +54,7 @@ public class UserInput : MonoBehaviour
     /// </summary>
     void DragTouchAcrossScreen()
     {
+        //Rotation - Single touch input
         if (Input.touchCount ==1)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Moved && selectedObject != null)
@@ -61,8 +62,8 @@ public class UserInput : MonoBehaviour
                 selectedObject.Rotate(Input.GetTouch(0).deltaPosition * oneToughDragMagnitude);
             }
 
-           
-        }
+
+        } //Scale - Two touch input
         else if (Input.touchCount > 1)
         {
             if (selectedObject != null)
