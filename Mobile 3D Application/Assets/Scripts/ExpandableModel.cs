@@ -5,28 +5,17 @@ using UnityEngine;
 public class ExpandableModel : MonoBehaviour, IObjectInteractable
 {
     bool expanded;
-    List<ExpandableComponent> childObjects;
+    List<ModelExpandableChild> childObjects;
 
-    [Header("Expansion")]
-    [SerializeField][Tooltip("The magnitude at which a child component of this object will expand outwards relative to the starting position and origin.")] float expansionMagnitude;
+    Coroutine expandCoroutine;
 
-    struct ExpandableComponent
-    {
-        public Transform expandableObject;
-        public Vector3 startPosition;
-        public Vector3 endPosition;
-
-        public ExpandableComponent(Transform _expandableComponent, Vector3 _startPos, Vector3 _endPos)
-        {
-            expandableObject = _expandableComponent;
-            startPosition = _startPos;
-            endPosition = _endPos;
-        }
-    }
+    float expansionMagnitude;
+    [SerializeField] float expansionRate;
+    [SerializeField] float collapseRate;
 
     private void Start()
     {
-        //SetChildObjectParts();
+        SetChildObjectParts();
     }
 
     public void Rotate(Vector2 _rotation)
@@ -40,53 +29,57 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
         transform.localScale += Vector3.one * _deltaScale;
     }
 
-    /// <summary>
-    /// Expands object to a state where each sub component is seperated by space.
-    /// </summary>
-    void ExpandObject()
-    {
-        //To expand the object each component must have a starting and end position to lerp between.
-        //Using the natural starting position we can expand into a direction using the axis in which
-        //the object is most alligned and expanding to a point proportional to the natural starting
-        //position from centre.
-
-        //foreach (ExpandableComponent _childObject in childObjects)
-     
-    }
 
     /// <summary>
     /// Set the child objects that make up this object.
     /// </summary>
     void SetChildObjectParts()
     {
-        List<ExpandableComponent> childObjects = new List<ExpandableComponent>();
+        List<ModelExpandableChild> childObjects = new List<ModelExpandableChild>();
 
-        Transform[] childTransforms = GetComponentsInChildren<Transform>();
+        ModelExpandableChild[] childTransforms = GetComponentsInChildren<ModelExpandableChild>();
 
-        foreach(Transform _transform in childTransforms)
+        childObjects.AddRange(GetComponentsInChildren<ModelExpandableChild>());
+    }
+
+
+
+    public void Interact()
+    {
+        if (expandCoroutine != null)
+            StopCoroutine(expandCoroutine);
+
+        if (expanded)
+            expandCoroutine = StartCoroutine(CollapseObject());
+        else
+            expandCoroutine = StartCoroutine(ExpandObject());
+    }
+
+    /// <summary>
+    /// Expands object to a state where each sub component is seperated by space.
+    /// </summary>
+    IEnumerator ExpandObject()
+    {
+        while (expansionMagnitude < 1)
         {
-            //Get the localPosition of object when expanded but using original world scale.
-
-
-            //childObjects.Add(new ExpandableComponent(_transform, _transform.localPosition, )
+            expansionMagnitude += expansionRate;
+            yield return new WaitForEndOfFrame();
         }
-
-        childObjects.AddRange(GetComponentsInChildren<ExpandableComponent>());
+        expansionMagnitude = 1;
+        yield return null;
     }
 
     /// <summary>
     /// Collapses object into a state where it is put together.
     /// </summary>
-    void CollapseObject()
-    { 
-        
-    }
-
-    public void Interact()
+    IEnumerator CollapseObject()
     {
-        if (expanded)
-            CollapseObject();
-        else
-            ExpandObject();
+        while (expansionMagnitude > 0)
+        {
+            expansionMagnitude -= collapseRate;
+            yield return new WaitForEndOfFrame();
+        }
+        expansionMagnitude = 0;
+        yield return null;
     }
 }
