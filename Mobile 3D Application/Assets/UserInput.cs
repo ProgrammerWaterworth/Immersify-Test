@@ -9,7 +9,6 @@ public class UserInput : MonoBehaviour
 
     [Header("Touch Control Variables")]
     [Tooltip("The amount by which a drag action affects selected objects rotation.")][SerializeField] float dragMagnitude;
-    Vector2 startingTouchPosition;
     
 
 
@@ -35,30 +34,24 @@ public class UserInput : MonoBehaviour
                 if (Physics.Raycast(_ray, out _hit, Mathf.Infinity))
                 {                 
                     selectedObject = _hit.transform.root.gameObject;
-
-                    Debug.Log("Selected: " + selectedObject);
-
-                    startingTouchPosition = Input.GetTouch(0).position;
                 }
-
             }
         }
     }
 
+    /// <summary>
+    /// Updates Rotation of the current selected object using touch inpuyt.
+    /// </summary>
     void DragTouchAcrossScreen()
     {
         if (Input.touchCount > 0)
         {
-            if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            if (Input.GetTouch(0).phase == TouchPhase.Moved && selectedObject !=null)
             {
-                selectedObject.transform.eulerAngles += new Vector3(Input.GetTouch(0).deltaPosition.y, -Input.GetTouch(0).deltaPosition.x, 0) *dragMagnitude;
+                selectedObject.transform.Rotate(Camera.main.transform.right, Input.GetTouch(0).deltaPosition.y * dragMagnitude, Space.World);
+                selectedObject.transform.Rotate(Camera.main.transform.up, -Input.GetTouch(0).deltaPosition.x * dragMagnitude, Space.World);
             }
         }
     }
 
-
-    void Release()
-    {
-
-    }
 }
