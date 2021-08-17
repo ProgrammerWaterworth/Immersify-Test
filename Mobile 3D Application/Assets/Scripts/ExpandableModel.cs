@@ -15,6 +15,8 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
 
     [SerializeField] TextAsset modelData;
 
+    const float minScale = 0.05f;
+
     private void Start()
     {
         SetChildObjectParts();
@@ -29,6 +31,8 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
     public void Scale(float _deltaScale)
     {
         transform.localScale += Vector3.one * _deltaScale;
+        if (transform.localScale.x < minScale)
+            transform.localScale = Vector3.one * minScale;
     }
 
 
