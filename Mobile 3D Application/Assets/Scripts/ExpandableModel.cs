@@ -13,6 +13,8 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
     [SerializeField] float expansionRate;
     [SerializeField] float collapseRate;
 
+    [SerializeField] TextAsset modelData;
+
     private void Start()
     {
         SetChildObjectParts();
@@ -37,9 +39,20 @@ public class ExpandableModel : MonoBehaviour, IObjectInteractable
     {
         childObjects = new List<ModelExpandableChild>();
         childObjects.AddRange(GetComponentsInChildren<ModelExpandableChild>());
+
+        //Set the name of each component
+        string[] data = modelData.text.Split(new char[] { ',' });
+
+        foreach (ModelExpandableChild _child in childObjects)
+        {
+            for (int i = 0; i < data.Length - 1;i++)
+            {
+                if (_child.name.Contains(data[i]))
+                    _child.SetPartName(data[i]);
+            }
+        }
+    
     }
-
-
 
     public void Interact()
     {
