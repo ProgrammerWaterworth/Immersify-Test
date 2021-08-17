@@ -32,6 +32,8 @@ public class UserInput : MonoBehaviour
             {
                 Ray _ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
                 RaycastHit _hit;
+              
+
 
                 if (Physics.Raycast(_ray, out _hit, Mathf.Infinity))
                 {
@@ -40,6 +42,7 @@ public class UserInput : MonoBehaviour
                     if (_interactable != null)
                     {
                         selectedObject = _interactable;
+                        selectedObject.Interact();
                     }
                 }
             }
@@ -47,7 +50,7 @@ public class UserInput : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates Rotation of the current selected object using touch input.
+    /// Updates Rotation and Scale of the current selected object using touch input.
     /// </summary>
     void DragTouchAcrossScreen()
     {
@@ -59,7 +62,8 @@ public class UserInput : MonoBehaviour
             }
 
            
-        }else if (Input.touchCount > 1)
+        }
+        else if (Input.touchCount > 1)
         {
             if (selectedObject != null)
             {
@@ -73,7 +77,8 @@ public class UserInput : MonoBehaviour
 
                 twoTouchFingerDistance = _touchSeperation.magnitude;
             }
-
         }
     }
+
+
 }

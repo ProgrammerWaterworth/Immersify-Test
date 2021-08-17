@@ -17,4 +17,8 @@ public interface IObjectInteractable
     /// <param name="_deltaScale">The change in object scale in which to uniformly scale the object by.</param>
     void Scale(float _deltaScale);
 
+    /// <summary>
+    /// Triggers the object interaction.
+    /// </summary>
+    void Interact();
 }
